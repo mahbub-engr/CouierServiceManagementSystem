@@ -1,4 +1,6 @@
-﻿using CouierServiceManagementSystemConsoleApp.Models;
+﻿using CouierServiceManagementSystemConsoleApp.Data;
+using CouierServiceManagementSystemConsoleApp.Models;
+using CouierServiceManagementSystemConsoleApp.Services;
 
 
 Courier courier = new Courier();
@@ -18,9 +20,29 @@ delivery.CourierID = 1000;
 delivery.PickupLocation = "Darsana";
 delivery.DropLocation = "Kustia";
 delivery.AssignmentDateTime = DateTime.Now;
-delivery.AssignCourier();
+//delivery.AssignCourier();
 
 
+string Name = "Abdul KAlam";
+string Phone = "01523654789";
+string Address = "rajshahi";
+ICustomerRepository customerRepository = new CustomerRepository();
+
+
+
+
+
+
+CustomerService customerService = new CustomerService(customerRepository);
+Customer customer =customerService.GetorCreate(Name,Phone,Address);
+
+
+
+
+Console.WriteLine($"CustomerID: {customer.CustomerID}");
+Console.WriteLine($"Name: {customer.Name}");
+Console.WriteLine($"Phone: {customer.Phone}");
+Console.WriteLine($"Address: {customer.Address}");
 
 
 

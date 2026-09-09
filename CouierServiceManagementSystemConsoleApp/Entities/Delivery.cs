@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CouierServiceManagementSystemConsoleApp.Models
 {
-    internal class Delivery
+    public class Delivery
     {
         public string TrackingID { get; set; }
         public int  CourierID { get; set; }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CouierServiceManagementSystemConsoleApp.Data
 {
-    internal class DBConnection
+    public static class DBConnection
     {
+        public static string ConnectionString = "server=.;database =DB_Courier_SMS; integrated security = true";
     }
 }

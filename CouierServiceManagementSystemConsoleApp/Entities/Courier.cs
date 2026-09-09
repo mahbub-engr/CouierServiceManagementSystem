@@ -2,44 +2,44 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CouierServiceManagementSystemConsoleApp.Models
 {
-    public class Customer
+    public class Courier
     {
-        public string CustomerID { get; set; }
         public string Name { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
+        public string Status { get; set; }
 
         private string ConnectionString = "server=.;database =DB_Courier_SMS; integrated security = true";
-        public void AddCustomer ()
+        public void AddCourier()
         {
-            
+
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string insertQuery = @"Insert into tbl_customer (Name,Phone,Address) values (@Name,@Phone,@Address) ";
+                string insertQuery = @"Insert into tbl_courier (Name,Status) values (@Name,@Status) ";
                 using (SqlCommand cmd = new SqlCommand(insertQuery, connection))
                 {
                     cmd.Parameters.AddWithValue("@Name", Name);
-                    cmd.Parameters.AddWithValue("@Phone", Phone);
-                    cmd.Parameters.AddWithValue("@Address", Address);
+                    cmd.Parameters.AddWithValue("@Status", Status);
                     connection.Open();
-                   int res = cmd.ExecuteNonQuery();
-                    if (res > 0) {
+                    int res = cmd.ExecuteNonQuery();
+                    if (res > 0)
+                    {
                         Console.WriteLine("Success");
-                    }else
+                    }
+                    else
                     {
                         Console.WriteLine("Failed");
                     }
 
                 }
-               
 
-            } 
+
+            }
         }
-
     }
 }

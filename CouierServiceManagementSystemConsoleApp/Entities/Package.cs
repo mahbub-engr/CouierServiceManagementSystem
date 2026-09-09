@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace CouierServiceManagementSystemConsoleApp.Models
 {
-    internal class Package
+    public class Package
     {
         public string TrackingID { get; set; }
         public string SenderID { get; set; }
