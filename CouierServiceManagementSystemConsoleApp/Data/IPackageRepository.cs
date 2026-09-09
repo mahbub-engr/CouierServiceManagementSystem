@@ -10,7 +10,7 @@ namespace CouierServiceManagementSystemConsoleApp.Data
 {
     public interface IPackageRepository
     {
-        bool AddPackage(Package package);
+        Guid AddPackage(Package package);
         Package FiendByTrackingID( string trackingId);
         bool UpdataStatus (string trackingId,string newStatus);
         DataTable GetShipments(string status,int senderId,DateTime? fromDate);
