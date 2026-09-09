@@ -52,7 +52,7 @@ namespace CouierServiceManagementSystemConsoleApp.Data
                     s.Phone as Sender_Phone,
                     s.Address as Sender_Address,
                     r.CustomerID as Receiver_ID,
-                    r.Name as Receiverr_Name,
+                    r.Name as Receiver_Name,
                     r.Phone as Receiver_Phone,
                     r.Address as Receiver_Address 
                     from tbl_package p
@@ -85,7 +85,7 @@ namespace CouierServiceManagementSystemConsoleApp.Data
                                 Receiver = new Customer
                                 {
                                     CustomerID = Guid.Parse(reader["Receiver_ID"].ToString()),
-                                    Name = reader["Receiverr_Name"].ToString(), // Matches alias from SQL query
+                                    Name = reader["Receiver_Name"].ToString(), // Matches alias from SQL query
                                     Phone = reader["Receiver_Phone"].ToString(),
                                     Address = reader["Receiver_Address"].ToString()
                                 }
@@ -97,14 +97,27 @@ namespace CouierServiceManagementSystemConsoleApp.Data
             return null;
         }
 
-        public DataTable GetShipments(string status, int senderId, DateTime? fromDate)
+        public bool UpdataStatus(string trackingId, EStatus newStatus)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool UpdataStatus(string trackingId, string newStatus)
-        {
-            throw new NotImplementedException();
+            string updateQuery = @"update tbl_package set Status = @newStatus
+                                    where TrackingID = @trackingId";
+            using (SqlConnection connection = new SqlConnection(DBConnection.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand(updateQuery,connection))
+            {
+                cmd.Parameters.AddWithValue("@newStatus", newStatus.ToString());
+                cmd.Parameters.AddWithValue("@trackingId", trackingId);
+                connection.Open();
+                int res = cmd.ExecuteNonQuery();
+                if (res >0)
+                {
+                    Console.WriteLine("Updated");
+                }
+                else
+                {
+                    Console.WriteLine("Failed");
+                }
+                return true;
+            }
         }
     }
 }

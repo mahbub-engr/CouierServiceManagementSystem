@@ -10,7 +10,8 @@ namespace CouierServiceManagementSystemConsoleApp.Data
     {
         Pending,
         Processing,
-        Shipped,    
+        Shipped, 
+        Delivered,
         Cancelled
     }
 }

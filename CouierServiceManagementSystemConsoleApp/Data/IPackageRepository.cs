@@ -12,8 +12,7 @@ namespace CouierServiceManagementSystemConsoleApp.Data
     {
         Guid AddPackage(Package package);
         Package FiendByTrackingID( string trackingId);
-        bool UpdataStatus (string trackingId,string newStatus);
-        DataTable GetShipments(string status,int senderId,DateTime? fromDate);
+        bool UpdataStatus (string trackingId,EStatus newStatus);
 
     }
 }
