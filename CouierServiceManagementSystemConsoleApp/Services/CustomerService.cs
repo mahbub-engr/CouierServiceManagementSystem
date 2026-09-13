@@ -10,28 +10,44 @@ namespace CouierServiceManagementSystemConsoleApp.Services
 {
     public class CustomerService
     {
-        private ICustomerRepository repository;
-       public CustomerService (ICustomerRepository repository)
+        CustomerRepository customerRepository = new CustomerRepository();
+        public Guid Add (Customer customer)
         {
-            this.repository = repository;
-            
-        }
-        public Customer GetorCreate (string name ,string phone,string address)
-        {
-            Customer existing = repository.FindByPhone(phone);
-            if(existing !=null)
+
+            if (customer !=null)
             {
-                return existing;
+                customer.CustomerID = Guid.NewGuid();
+                if (customer.Name !="" && customer.Phone !="" && customer.Address !="")
+                {
+                   return customerRepository.AddCustomer(customer);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid customer information");
+
+                }
+            }else
+            {
+                Console.WriteLine("Invalid input");
             }
-            Customer newCustomer = new Customer {
-                CustomerID = Guid.NewGuid(),
-                Name=name,
-                Phone=phone,
-                Address=address
-            };
-            repository.AddCustomer(newCustomer);
-            return newCustomer;
+            return Guid.Empty;
+        }
+        public bool CheckCustomerExistOrNot ( Customer customer)
+        {
+
+            bool IsChecked  =  customerRepository.CheckCustomerExistOrNot (customer);
+            return IsChecked;
         }
 
+        public Customer FindByPhone(string phone)
+        {
+            return customerRepository.FindByPhone(phone);
+        }
+
+
+        public Customer FindByID(string id)
+        {
+            return customerRepository.FindByID(id);
+        }
     }
 }
