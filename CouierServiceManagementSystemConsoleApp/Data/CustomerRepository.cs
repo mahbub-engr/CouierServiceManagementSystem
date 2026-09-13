@@ -1,6 +1,7 @@
 ﻿using CouierServiceManagementSystemConsoleApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -18,7 +19,6 @@ namespace CouierServiceManagementSystemConsoleApp.Data
 
         public Guid AddCustomer(Customer customer)
         {
-            customer.CustomerID =  Guid.NewGuid();
             using (SqlConnection connection = new SqlConnection(DBConnection.ConnectionString))
             {
                 string insertQuery = @"Insert into tbl_customer (CustomerID,Name,Phone,Address) 
@@ -39,6 +39,36 @@ namespace CouierServiceManagementSystemConsoleApp.Data
             return customer.CustomerID;
             
         }
+
+
+
+
+        public bool CheckCustomerExistOrNot (Customer customer)
+        {
+            string query = @"select CustomerID from tbl_customer where Phone = @Phone";
+            using (SqlConnection connection = new SqlConnection(DBConnection.ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Phone", customer.Phone);
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+
+
 
 
         public Customer FindByID(string id)
