@@ -10,7 +10,7 @@ namespace CouierServiceManagementSystemConsoleApp.Data
 {
     internal interface ICourierRepository
     {
-        int Insert(Courier courier);
+        int Add(Courier courier);
         DataTable GetByStatus(string status);
         Courier FindById(int id);
         bool UpdateStatus(int courierId, string status);
